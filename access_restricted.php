@@ -20,7 +20,7 @@
                         <h1>Access restrictes</h1>
                     </div>
                     <div class="alert alert-danger fade in">
-                        <p>Sorry, you are not allowed to acces the requested file.<a href="" class="alert-link">go back</a> and try again.</p>
+                        <p>Sorry, you are not allowed to acces the requested file.<a href="first_page.php" class="alert-link">go back</a> and try again.</p>
                     </div>
                 </div>
             </div>        

@@ -1,3 +1,20 @@
+<?php 
+  SESSION_start();
+  $username=$_SESSION["username"];
+  
+  ?>
+
+
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -442,11 +459,11 @@ body {
 					<div class="modal-body">
 					    <div class="form-group">
 							<label>Organization</label>
-							<input type="text" name="org_name" class="form-control" placeholder='Jupiter'  title="Three or more letter" required>
+							<input type="text" name="org_name" class="form-control"  placeholder='Jupiter'  title="Three or more letter" required>
 						</div>					
 						<div class="form-group">
 							<label>Branch_id</label>
-							<input type="text" name="branch_id" class="form-control" pattern="(?=.*[b])(?=.*[0-9]).{5,}" title="Id should be in requested format" required>
+							<input type="text" name="branch_id" class="form-control" maxlength="5" minlength="5" pattern="(?=.*[b])(?=.*[0-9]).{5,}" title="Id should be in requested format" required>
 						</div>
 						<div class="form-group">
 							<label>Branch</label>
@@ -477,7 +494,7 @@ body {
 									<div class="form-group row">
                                         <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control"   name='contact_no' pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" required >
+                                            <input type="text" class="form-control"   name='contact_no' maxlength="10" minlength="10" pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" required >
                                         </div>
                                     </div>
                                     <div class="chiller_cb">
@@ -488,7 +505,7 @@ body {
 									<div class="form-group row">
                                         <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name='contact_no1' pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" >
+                                            <input type="text" class="form-control" name='contact_no1'  maxlength="10" minlength="10"pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" >
                                         </div>
                                     </div><br>
                                     <div class="chiller_cb">
@@ -499,7 +516,7 @@ body {
 								   <div class="form-group row">
                                         <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control"  name='contact_no2' pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" >
+                                            <input type="text" class="form-control"  name='contact_no2'  maxlength="10" minlength="10" pattern="(?=.*[0-9]).{10,}" title=" invalid phone number"  placeholder="if this dep exists" >
                                         </div>
                                     </div><br>
 
@@ -511,7 +528,7 @@ body {
 								   <div class="form-group row">
                                         <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name='contact_no3' pattern="(?=.*[0-9]).{10,}" title=" invalid phone number" placeholder="if this dep exists" >
+                                            <input type="text" class="form-control" name='contact_no3' maxlength="10" minlength="10" pattern="(?=.*[0-9]).{10,}" title=" invalid phone number" placeholder="if this dep exists" >
                                         </div>
                                     </div><br>
 								    

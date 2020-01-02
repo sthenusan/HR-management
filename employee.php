@@ -1,9 +1,22 @@
-<?php
-   session_start();
-	
-   $emp_id=$_SESSION["username"];
 
- ?>
+
+
+
+ <?php 
+  SESSION_start();
+  $emp_id=$_SESSION["username"];
+  
+  ?>
+
+
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -336,8 +349,9 @@ $row_branch=mysqli_fetch_array($branch_result);
 							
 							     <a  name="edit" value="Edit" emp_id="<?php echo $row['emp_id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
                                
-								 <a href="EmployeeModal" class="account_box" data-toggle="modal"><i class="glyphicon glyphicon-user"></i></a>
+								 <a href="employee_hr_view_profile.php?emp_id=<?php echo $row['emp_id']; ?>" class="account_box" data-toggle="modal"><i class="glyphicon glyphicon-user"></i></a>
 						    </div>
+
                             </td>
                             </tr>
                            <?php }?>

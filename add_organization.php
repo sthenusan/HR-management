@@ -5,6 +5,16 @@
   ?>
 
 
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -370,7 +380,7 @@ $(document).ready(function(){
 					<div class="modal-body">					
 						<div class="form-group">
 							<label>Organization ID</label>
-							<input type="text" name="org_id" class="form-control" pattern=".{5}" title="Organization ID Should be in required format" maxlength="5" minlength="5" required>
+							<input type="text" name="org_id" maxlength="5" minlength="5" class="form-control" pattern=".{5}" title="Organization ID Should be in required format" maxlength="5" minlength="5" required>
 						</div>
 						<div class="form-group">
 							<label>Organization Name</label>

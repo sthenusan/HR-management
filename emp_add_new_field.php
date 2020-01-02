@@ -1,3 +1,21 @@
+<?php 
+  SESSION_start();
+  $username=$_SESSION["username"];
+  
+  ?>
+
+
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +64,7 @@ $("#attribute_type").change(function() {
 </script>
 
 <?php 
-session_start();
+//session_start();
   include 'config/database.php';
   include 'objects/employee.php';
 

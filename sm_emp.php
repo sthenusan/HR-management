@@ -1,9 +1,13 @@
-<?php
-   session_start();
-	
-   $emp_id=$_SESSION["username"];
 
-?>
+
+
+
+ <?php 
+  SESSION_start();
+  $emp_id=$_SESSION["username"];
+  
+  ?>
+
 
 <?php
     if (!isset($_SESSION['username'])){
@@ -21,7 +25,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hrms</title>
+<title>HRM</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -251,40 +255,55 @@
 </head>
 <body>
 <?php
-   // session_start();
+
+
     function db_connect(){
-    $conn = mysqli_connect("localhost", "root", "", "hrm");
-    if(!$conn){
-      echo "Can't connect database " . mysqli_connect_error($conn);
-      exit;
-    }
-    function getAll($conn){
-		$query = "SELECT  distinct emp_id,fname,lname,branch_id,Address from hr_details  ORDER BY emp_id DESC";
-		$result = mysqli_query($conn, $query);
-		
-		
-        if(!$result){
-            echo "Can't retrieve data " . mysqli_error($conn);
-            exit;
-        }
-        return $result;
-    }
-    return $conn;
+	    $conn = mysqli_connect("localhost", "root", "", "hrm");
+	    if(!$conn){
+	      echo "Can't connect database " . mysqli_connect_error($conn);
+	      exit;
+	    }
+	    function getAll($conn,$branch_id){
+			$query = "SELECT emp_id,fname,lname, marital_status,nationality,birth_date,gender,Address from employee where emp_id in (select emp_id from emp_branch_department where branch_id ='$branch_id') ORDER BY emp_id DESC";
+			$result = mysqli_query($conn, $query);
+			
+			
+	        if(!$result){
+	            echo "Can't retrieve data " . mysqli_error($conn);
+	            exit;
+	        }
+	        return $result;
+	    }
+	   return $conn;
   }
+
+
+  
  $conn = db_connect();
- $result = getAll($conn);
+
+
+ $query_branch="SELECT branch_id from emp_branch_department where emp_id='$emp_id'";
+
+ $branch_result=mysqli_query($conn,$query_branch);
+
+$row_branch=mysqli_fetch_array($branch_result);
+
+
+
+
+ 
+ $branch_id=$row_branch['branch_id'];
+ 
+ $result = getAll($conn,$branch_id);
 ?>
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-						<h2>Manage <b>HR Managers</b></h2>
+						<h2>Manage <b>Employees</b></h2>
 					</div>
-					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New HR Manager</span></a>
-						 						
-					</div>
+
                 </div>
             </div>
 		
@@ -295,10 +314,13 @@
                         <th>Emp_id</th>
                         <th>First name</th>
                         <th>Last name</th>
-						<th>Branch ID</th>
+						<th>Marital status</th>
+                        <th>nationality</th>
+                        <th>Birth date</th>
+                        <th>Gender</th>
 						<th>Address</th>
                        
-                        
+                        <th>Actions</th>
 
                     </tr>
                 </thead>
@@ -313,10 +335,19 @@
                              <td><?php echo $row['emp_id']; ?></td>
                              <td><?php echo $row['fname']; ?></td>
                              <td><?php echo $row['lname']; ?></td>
-                             <td><?php echo $row['branch_id']; ?></td>
+                             <td><?php echo $row['marital_status']; ?></td>
+                             <td><?php echo $row['nationality']; ?></td>
+                             <td><?php echo $row['birth_date']; ?></td>
+                             <td><?php echo $row['gender']; ?></td>
                              <td><?php echo $row['Address']; ?></td>
                              
 							 <td>
+							<div class="row">
+							
+							     <a  name="edit" value="Edit" emp_id="<?php echo $row['emp_id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
+                               
+								 <a href="employee_hr_view_profile.php?emp_id=<?php echo $row['emp_id']; ?>" class="account_box" data-toggle="modal"><i class="glyphicon glyphicon-user"></i></a>
+						    </div>
 
                             </td>
                             </tr>
@@ -350,15 +381,15 @@
 	
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="edit_form" action="assets/hr_edit_inc.php" method="post" enctype="multipart/form-data"  >
+				<form id="edit_form" action="assets/employee_edit_inc.php" method="post" enctype="multipart/form-data"  >
 					<div class="modal-header">						
-						<h4 class="modal-title">Edit HR Manager</h4>
+						<h4 class="modal-title">Edit Employee</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">	
 					    <div class="form-group">
 							<label>Emp_id</label>
-							<input type="text"name="emp_id" id="emp_id"  class="form-control"   maxlength="10" minlength="10" pattern="(?=.*[e])(?=.*[0-9]).{10,}" title="Id should be in requested format" required>
+							<input type="text"name="emp_id" id="emp_id"  class="form-control" maxlength="10" minlength="10"  pattern="(?=.*[e])(?=.*[0-9]).{10,}" title="Id should be in requested format" required>
 						</div>
 						<div class="form-group">
 							<label>First name</label>
@@ -367,11 +398,6 @@
 						<div class="form-group">
 							<label>Last name</label>
 							<input class="form-control" type="text" name='lname'  id='lname'  pattern="[A-Za-z]{3,}" title="Three or more letter" required>
-						</div>
-
-						<div class="form-group">
-							<label>Branch ID</label>
-							<input class="form-control" type="text" name='branch_id'  placeholder="If any changes" id='branch_id' maxlength="5" minlength="5" pattern="(?=.*[b])(?=.*[0-9]).{5,}" title="Three or more letter" placeholder="if change in branch" >
 						</div>
 						<div class="form-group">
 							<label>Marital status</label>
@@ -422,8 +448,10 @@
 
 						<div class="form-group ">
                             <label >Department</label><br>
-							<select class="form-control" id='deparment' name='department' required>
-
+							<select class="form-control " name='department' id='department'required>
+                                  <option value="marketing" for="type">marketing</option>
+                                  <option value="finance" for="type">finance</option>
+                                  <option value="IT" for="type">IT</option>
                                   <option value="human_resource" for="type">human resource</option>
                                    
                             </select>   
@@ -432,8 +460,15 @@
 						 
 						 
 						 
-						 
-									
+						<div class="form-group">
+							<label>Job</label>
+                            <select class="form-control" name='title_name' id='title_name'  required>
+                                  <option value="Accountant" for="type">Accountant</option>
+                                  <option value="Software_Engineer" for="type">Software Engineer</option>
+                                  <option value="QA_Engineer" for="type">QA Engineer</option>
+                                   
+                            </select>
+						</div>					
 					 					
 						<div class="form-group">
 							<label>Joined date</label>
@@ -463,10 +498,10 @@
 						</div>
 						<div class="form-group">
 							<label>Pay grade</label>
-                            <select class="form-control" name="paygrade" role='paygrade'  required>
-                                  <option value="level_1" for="type">level 1</option>
-                                  <option value="level_2" for="type">level 2</option>
-                                  <option value="level_3" for="type">level 3</option>
+                            <select class="form-control" name="paygrade" required>
+                                  <option value="level_1" for="type">level_1</option>
+                                  <option value="level_2" for="type">level_2</option>
+                                  <option value="level_3" for="type">level_3</option>
                                                                                                       
                                    
                             </select>
@@ -493,7 +528,7 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						 
+					
 						<input type="submit"name='save' class="btn btn-info save" emp_id="<?php echo $row['emp_id']; ?>" id="save" value="save">
 					</div>
 				</form>
@@ -508,7 +543,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				
-                <form  action="assets/hr_add.php" method="post" enctype="multipart/form-data" onsubmit="return checkDate(this)">            
+                <form  action="assets/employee_add.php" method="post" enctype="multipart/form-data" onsubmit="return checkDate(this)">            
                 <div class="content-body">
 					<div class="modal-header">						
 						<h4 class="modal-title">ADD Employee</h4>
@@ -517,7 +552,7 @@
 					<div class="modal-body">					
 						<div class="form-group">
 							<label>Emp_id</label>
-							<input type="text" name="emp_id" class="form-control" maxlength="10" minlength="10" pattern="(?=.*[e])(?=.*[0-9]).{10,}" title="Id should be in requested format" required>
+							<input type="text" name="emp_id" class="form-control" pattern="(?=.*[e])(?=.*[0-9]).{10,}" maxlength="10" minlength="10" title="Id should be in requested format" required>
 						</div>
 						<div class="form-group">
 							<label>First name</label>
@@ -527,14 +562,6 @@
 							<label>Last name</label>
 							<input class="form-control" type="text"  name='lname' pattern="[A-Za-z]{3,}" title="Three or more letter" required>
 						</div>
-
-						<div class="form-group">
-							<label>Branch ID</label>
-							<input class="form-control" type="text" name='branch_id'  id='branch_id' maxlength="5" minlength="5" pattern="(?=.*[b])(?=.*[0-9]).{5,}" title="Three or more letter" required>
-						</div>
-
-
-
 						<div class="form-group">
 							<label>Marital status</label>
                             <select class="form-control " name='marital_status' required>
@@ -584,20 +611,29 @@
                         
 						<div class="form-group ">
                             <label >Department</label><br>
-							<select class="form-control " id='department'name='department' required>
-                        
-                                  <option value="human_resource" for="type">human resource</option>
+							<select class="form-control " name='department' required>
+                                  <option value="marketing" for="type">marketing</option>
+                                  <option value="finance" for="type">finance</option>
+                                  <option value="IT" for="type">IT</option>
+                                  <option value="human resource" for="type">human resource</option>
                                    
                             </select>   
                                           
                        </div>		
 					   <div class="form-group">
 							<label>Job</label>
-                            <select class="form-control " name='title_name' required>
-                                  <option value="HR Manager" for="type">HR_Manager</option>
-                   
-                                   
-                            </select>
+                          <select name="title_name">
+                       <?php
+                        $db = mysqli_connect('localhost', 'root', '', 'hrm');
+                        $sql=("SELECT title_name FROM job_title");
+                        $result=mysqli_query($db,$sql);
+                        if (mysqli_num_rows($result)>0){
+                          while ($row3=mysqli_fetch_assoc($result)){
+                            echo "<option value=".$row3['title_name'].">".$row3['title_name']."</option>";
+
+                          }
+                        }?>
+                      </select>
 						</div>					
 					 					
 						<div class="form-group">
@@ -628,10 +664,10 @@
 						</div>
 						<div class="form-group">
 							<label>Pay grade</label>
-                            <select class="form-control" name="paygrade" required>
-                                  <option value="level_1" for="type">level 1</option>
-                                  <option value="level_2" for="type">level 2</option>
-                                  <option value="level_3" for="type">level 3</option>
+                            <select class="form-control" name="paygrade" id="pg_type" required>
+                                  <option value="level_1" for="type">level_1</option>
+                                  <option value="level_2" for="type">level_2</option>
+                                  <option value="level_3" for="type">level_3</option>
                                                                                                       
                                    
                             </select>
@@ -717,7 +753,8 @@ function checkDate(form){
 						$('#num_family_members').val(user.num_family_members);
 						$('#contact_per_name').val(user.contact_per_name);
 						$('#econtact_no').val(user.econtact_no);
-					    $('#role_name').val(user.role_name);
+						$('#title_name').val(user.title_name);
+						$('#role_name').val(user.role_name);
 						$('#pg_type').val(user.pg_type);
 						$('#status_type').val(user.status_type);
 						$('#joined_date').val(user.joined_date);

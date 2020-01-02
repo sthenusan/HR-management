@@ -5,6 +5,15 @@
 
 ?>
 
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -289,7 +298,7 @@
 						<th>Branch ID</th>
 						<th>Address</th>
                        
-                        <th>Actions</th>
+                        
 
                     </tr>
                 </thead>
@@ -308,12 +317,7 @@
                              <td><?php echo $row['Address']; ?></td>
                              
 							 <td>
-							<div class="row">
-							
-							     <a  name="edit" value="Edit" emp_id="<?php echo $row['emp_id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button>
-                               
-								 <a href="EmployeeModal" class="account_box" data-toggle="modal"><i class="glyphicon glyphicon-user"></i></a>
-						    </div>
+
                             </td>
                             </tr>
                            <?php }?>
@@ -528,7 +532,7 @@
 					<div class="modal-body">					
 						<div class="form-group">
 							<label>Emp_id</label>
-							<input type="text" name="emp_id" class="form-control" pattern="(?=.*[e])(?=.*[0-9]).{10,}" title="Id should be in requested format" required>
+							<input type="text" name="emp_id" class="form-control" maxlength="10" minlength="10" pattern="(?=.*[e])(?=.*[0-9]).{10,}" title="Id should be in requested format" required>
 						</div>
 						<div class="form-group">
 							<label>First name</label>
