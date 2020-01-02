@@ -1,6 +1,4 @@
-
-
-  <?php 
+<?php 
   SESSION_start();
   $username=$_SESSION["username"];
   
@@ -16,7 +14,6 @@
 
 ?>
 
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -29,7 +26,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>HRM-Admin</title>
+    <title>HRM-Employee</title>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -62,23 +59,19 @@
         <header class="demo-drawer-header">
           <img src="https://image.ibb.co/mGn5np/user.jpg" class="demo-avatar">
           <div class="demo-avatar-dropdown">
-            <?php echo "<h5>".$_SESSION["username"]."</h5>"; ?>
+            <span><?php echo "<h5>".$_SESSION["username"]."</h5>"; ?></span>
         
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
            <a class="mdl-navigation__link" href="profile.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Profile</a>
-          <a class="mdl-navigation__link" href="/final_version/hr.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>View HRManager</a>
-
-          <a class="mdl-navigation__link" href="/final_version/second.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>View SecondManager</a>
-          
-          <a class="mdl-navigation__link" href="/final_version/emp_add_new_field.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>New Field</a>
-           <a class="mdl-navigation__link" href="/final_version/department.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>View Department</a>
-            <a class="mdl-navigation__link" href="../add_organization.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>View Organization</a>
+          <a class="mdl-navigation__link" href="apply-leave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Apply Leave</a>
+          <a class="mdl-navigation__link" href="/final_version/emp_view_applied_leave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Aprove Leave</a>
+                    <a class="mdl-navigation__link" href="/final_version/view_remainingleave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Leave Details</a>
           <a class="mdl-navigation__link" href="logout.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>LogOut</a>
          
           
-          <div class="mdl-layout-spacer"></div>
+          
          
         </nav>
       </div>

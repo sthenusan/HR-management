@@ -2,6 +2,13 @@
 session_start();
 $emp_id=$_SESSION["username"];
 ?>
+
+<?php    
+if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -417,9 +424,7 @@ $branch_id='';
                             </tr>
                            <?php }}
                           
-                           else{
-                               ("location:home.php");
-                           }}
+                         }
 
 
                            ?>
@@ -497,7 +502,11 @@ $branch_id='';
                              
 							
                             </tr>
-                           <?php }}}?>
+                           <?php }}
+                           else {
+                            echo "<h1>"."No one is working in this branch for this certain job"."<h1>";
+                           }
+                         }?>
                        
                     
                      
@@ -571,7 +580,11 @@ $branch_id='';
                              
 							
                             </tr>
-                           <?php }}}?>
+                           <?php }}
+                            else {
+                            echo "<h1>"."No one is working in this branch for this certain pay grade"."<h1>";
+                           }
+                         }?>
                        
                     
                      
@@ -734,7 +747,8 @@ else{
                             
                             </tr>
                            <?php }
-                           }}?>
+                           }
+                         }?>
                        
                     
                      

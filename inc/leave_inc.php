@@ -48,7 +48,7 @@ while($row = mysqli_fetch_array($result)){
 }
 
 $allowed_leave='';
-        $query11 = "SELECT allowed_leave  FROM max_allowe_leave WHERE leave_id='$leave_id' and emp_id='$emp_id';";
+        $query11 = "SELECT allowed_leave  FROM max_allowe_leave WHERE leave_id='$leave_id' and emp_id='$emp_id'";
         $result=mysqli_query($db, $query11);
         $applicationArray=array();
         while($row=mysqli_fetch_assoc($result)){
@@ -68,20 +68,49 @@ $allowed_leave='';
             $gender=$application['gender'];
         }
 
+ $apply='';
+ 
+         $query11 = "SELECT applied_date  FROM emp_applied_leave WHERE emp_id='$emp_id'order by applied_date limit 1";
+        $result=mysqli_query($db, $query11);
+        $applicationArray=array();
+        while($row=mysqli_fetch_assoc($result)){
+            $applicationArray[]=$row;
+        }
+        foreach ($applicationArray as $application) {
+            $apply=$application['applied_date'];
+        }
 
+        $from='';
+ 
+         $query11 = "SELECT from_date  FROM emp_applied_leave WHERE emp_id='$emp_id'order by from_date limit 1";
+        $result=mysqli_query($db, $query11);
+        $applicationArray=array();
+        while($row=mysqli_fetch_assoc($result)){
+            $applicationArray[]=$row;
+        }
+        foreach ($applicationArray as $application) {
+            $from=$application['from_date'];
+        }
+        if ($apply==$applied_date){
+                echo "<script>alert('You cannot apply for on same date.'); location.href='/final_version/inc/apply-leave.php';</script>";
+        }
+else if ($from==$from_date){
+                echo "<script>alert('You have already applied for leave on this date.'); location.href='/final_version/inc/apply-leave.php';</script>";
+        }
 
-        if ( ($gender=='m') and ($leave_type=='maternity')){
-                echo "<script>alert('You cannot apply for maternity leave.');</script>";
+        else if ( ($gender=='m') and ($leave_type=='maternity')){
+                echo "<script>alert('You cannot apply for maternity leave.'); location.href='/final_version/inc/apply-leave.php';</script>";
+                 //echo "<script>alert('already that branch has HR Maneger!'); location.href='../hr.php';</script>";
                 
             }
         
       
         else if (($days)>=($allowed_leave)){
-            echo "<script>alert('You cannot apply for leave. You are exceeding the limit');</script>";
+            echo "<script>alert('You cannot apply for leave. You are exceeding the limit');location.href='/final_version/inc/apply-leave.php';</script>";
         } 
 
         else if (($allowed_leave-$days)<$no_of_days){
-            echo "<script>alert('You cannot apply for leave. Your applied days exceeding the allow limit');</script>";
+            echo "<script>alert('You cannot apply for leave. Your applied days exceeding the allow limit');location.href='/final_version/inc/apply-leave.php';</script>";
         }
 
         else{
@@ -89,9 +118,9 @@ $allowed_leave='';
         $query="INSERT INTO emp_applied_leave (emp_id,applied_date,from_date,no_of_days,l_status,leave_id) VALUES('$emp_id','$applied_date','$from_date','$no_of_days','$l_status','$leave_id')";
         $result=mysqli_query($db,$query);
         if ($result){
-           echo "<script>alert('Your leave application has been submitted successfully');</script>";
+           echo "<script>alert('Your leave application has been submitted successfully');location.href='/final_version/inc/apply-leave.php';</script>";
         }else{
-             echo "<script>alert('Some thing went wrong try again');</script>";
+             echo "<script>alert('Some thing went wrong try again');location.href='/final_version/inc/apply-leave.php';</script>";
         }
     }
 
@@ -113,5 +142,5 @@ $allowed_leave='';
        // header('Location: ../employee.php');
 	}
 ?>
- <a href="apply-leave.php"><h1>Back To Page</h1></a>
+
 </html>

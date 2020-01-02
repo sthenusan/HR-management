@@ -31,7 +31,7 @@ if (isset($_POST['register'])) {
         if (mysqli_num_rows($results3)==1){
 
 
-        ##$password =md5($password );
+        $password =md5($password );
         $query = "INSERT INTO account (username,password,email)
                 VALUES('$username','$password','$email')";
         

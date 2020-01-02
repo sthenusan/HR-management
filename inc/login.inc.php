@@ -11,7 +11,7 @@ include_once ('db_config.php');
         $username = mysqli_real_escape_string($db, $_POST['username']);
         $password = mysqli_real_escape_string($db, $_POST['password']);
 
-        ##$password = md5($password);
+        $password = md5($password);
         
         $query = "SELECT * FROM account WHERE username = '$username' AND password = '$password' ";
         $results = mysqli_query($db,$query);
@@ -51,25 +51,30 @@ include_once ('db_config.php');
                     }
 
                     else if ($row_role_query['role_id']==4){
-                        header("location:employee_first.php");
+                        header("location:super_first.php");
                         
                     }
                     else if($row_role_query['role_id']==5){
                         header("location:employee_first.php");
                         
-                    }              
+                    }
+
+                    else if($row_role_query['role_id']==6){
+                        header("location:m_employee_first.php");
+                        
+                    }
+
+
                 
 
                 }
                 else{
-                    
-                    header("location:loginfail.php");
+                    echo "<script>alert('Incorrect email and password combination try again'); location.href='../first_page.php';</script>";
                     
                 }
             }
                 else{
-                    
-                    header("location:loginfail.php");
+                    echo "<script>alert('You are not a registerd user of HRM'); location.href='../first_page.php';</script>";
                     
                 }
     }

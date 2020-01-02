@@ -5,6 +5,18 @@
   ?>
 
 
+<?php
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
+
+
+?>
+
+
+
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -57,14 +69,15 @@
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
            <a class="mdl-navigation__link" href="profile.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Profile</a>
         
-
+          <a class="mdl-navigation__link" href="/final_version/sm_emp.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>View Employee</a>
           <a class="mdl-navigation__link" href="apply-leave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Apply Leave</a>
           
           <a class="mdl-navigation__link" href="/final_version/emp_view_applied_leave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Approve Leave</a>
+                    <a class="mdl-navigation__link" href="/final_version/view_remainingleave.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Leave Details</a>
           <a class="mdl-navigation__link" href="/final_version/emp_update_new_field.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Update New Field</a>
           <a class="mdl-navigation__link" href="logout.php"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>LogOut</a>
          
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
+          
           
         </nav>
       </div>

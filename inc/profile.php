@@ -101,10 +101,20 @@ body{
 
 </style>
 
+
+
+
+
 <?php
 session_start();
 include_once ('db_config.php');
 $emp_id=$_SESSION["username"];
+
+
+    if (!isset($_SESSION['username'])){
+        header("location: access_restricted.php");
+        exit();
+    }
 
 $row_employee='';
 
@@ -221,6 +231,11 @@ if(mysqli_num_rows($result_employee) > 0){
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+
+                                </li>
+                                                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="editpersonal_info.php" role="tab" aria-controls="home" aria-selected="true">Edit</a>
+                                    
                                 </li>
 
                             </ul>
