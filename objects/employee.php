@@ -128,6 +128,15 @@
             }
             
         }
+
+        public function employeeDetailsForLeave(){
+
+            $query = "SELECT emp_id,name,dept_name,branch_id FROM `emp_basic_info` natural join emp_role WHERE branch_id=? and (role_id=3 or role_id=4 or role_id=5)order by dept_name "; 
+            $stmt = $this->conn->prepare( $query );
+            $stmt->bindParam(1, $this->branch_id);
+            $stmt->execute();
+            return $stmt;
+        }
         
 
     }
