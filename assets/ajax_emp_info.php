@@ -5,7 +5,7 @@
       $connect = mysqli_connect("localhost", "root", "", "hrm");  
       $query="SELECT leave_type,allowed_leave from pg_leave natural join leave_type where pg_id=(select pg_id from emp_pg where emp_id='".$_POST["employee_id"]."') order by leave_type ASC";
       $query1 = "SELECT emp_id,fname,lname FROM employee WHERE emp_id = '".$_POST["employee_id"]."'";  
-      $query2="SELECT leave_type , sum(no_of_days)as leave_taken FROM leave_type natural join emp_applied_leave  WHERE emp_id='".$_POST["employee_id"]."' and month(from_date)=month(CURRENT_TIMESTAMP) and year(from_date)=year(CURRENT_TIMESTAMP) and l_status='approved' group by leave_type order by leave_type ASC";
+      $query2="SELECT leave_type , sum(no_of_days)as leave_taken FROM leave_type natural join emp_applied_leave  WHERE emp_id='".$_POST["employee_id"]."'  and year(from_date)=year(CURRENT_TIMESTAMP) and l_status='approved' group by leave_type order by leave_type ASC";
       $result = mysqli_query($connect, $query);  
       $result2 = mysqli_query($connect, $query2); 
       $result1= mysqli_query($connect, $query1);
