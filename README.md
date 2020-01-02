@@ -12,11 +12,7 @@ configurable. When an employee need to add a leave, he/she should login to the s
 
 your team plans to modularize it to a separate reporting module. At minimum the following reports are
 requested,
-● Employee by department
-● Total leaves in given period by department
-● Employee reports grouped by job title, department, pay grade etc.
-● Reports based on custom fields (should contain at least 2 custom fields created
-beforehand)
+Employee by department,Total leaves in given period by department,Employee reports grouped by job title, department, pay grade etc.
 
 
 Finally in the user management perspective of the system, fine grained authorization is
