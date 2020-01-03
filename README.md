@@ -23,3 +23,5 @@ edit access to all PIM information but no access to Absence related functionalit
 In order to initiate the product, your team has decided to first produce a well thought out
 database design. And then implement a PoC program to test the functionalities of the
 database. At this stage the UI/UX aspects are irrelevant.
+
+The Human Resource management system implemented using PHP,HTML,Java Script and MYSQL
